@@ -17,21 +17,21 @@ format.
 ## Implementation
 #### 1. Create a Root Project
 * Root project contain child project as below: <br>
-		* abc-common-domain: To share common Java beans over other project as dependencies. 
-		* abc-dataadapter: Read and validate product xml file and send to processor using event 
-		* abc-product-processor: Consume event and store data in database(mysql) 
-		* abc-gateway: As the entry point for client requests to an API.
+	1. abc-common-domain: To share common Java beans over other project as dependencies. <br> 
+	2. abc-dataadapter: Read and validate product xml file and send to processor using event <br> 
+	3. abc-product-processor: Consume event and store data in database(mysql) <br>
+	4. abc-gateway: As the entry point for client requests to an API. <br>
 	
 * Docker compose file to setup below tools
-		* Mysql 8
-		* Zookeeper
-		* Kafka
+	1. Mysql 8 <br>
+	2. Zookeeper <br>
+	3. Kafka <br>
 	
 #### 2. Setup tools 
 * Docker compose file with basic setup of mysql and kafka  
 * Requirements:
-		* docker >= 17.12.0+
-		* docker-compose
+	1. docker >= 17.12.0+ <br>
+	2. docker-compose <br>
 * Run this command `docker-compose up -d`
 
 

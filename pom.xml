@@ -15,10 +15,8 @@
     </properties>
 
     <modules>
-    	<!-- 
-        <module>order-service</module>
-        
-         -->
+        <module>abc-dataadapter</module>
+        <module>abc-product-processor</module>
         
     </modules>
 
