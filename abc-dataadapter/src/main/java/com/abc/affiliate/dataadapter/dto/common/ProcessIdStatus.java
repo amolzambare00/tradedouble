@@ -1,13 +1,18 @@
-package com.abc.affiliate.dataadapter.domain.common;
+package com.abc.affiliate.dataadapter.dto.common;
 
+import java.io.Serializable;
 import java.util.Map;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
-public class ProcessIdStatus {
+@NoArgsConstructor
+@AllArgsConstructor
+public class ProcessIdStatus implements Serializable {
 	
 	private String processId;
 	private ProcessStatus status;

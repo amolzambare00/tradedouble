@@ -6,7 +6,7 @@
 //
 
 
-package com.abc.affiliate.dataadapter.domain.product;
+package com.abc.affiliate.dataadapter.dto.product;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -20,9 +20,11 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.oxm.xstream.XStreamMarshaller;
 
+import com.abc.affiliate.dataadapter.batch.listener.ProductCountListener;
+import com.abc.affiliate.dataadapter.batch.listener.ProductJobExecutionListener;
 import com.abc.affiliate.dataadapter.batch.processor.ProductProcessor;
 import com.abc.affiliate.dataadapter.batch.writer.ProductKafkaSender;
-import com.abc.affiliate.dataadapter.domain.product.Result.Products.Product;
+import com.abc.affiliate.dataadapter.dto.product.Result.Products.Product;
 import com.abc.affiliate.dataadapter.service.impl.ProductServiceImpl;
 import com.thoughtworks.xstream.security.ExplicitTypePermission;
 
@@ -39,6 +41,12 @@ public class ProductJobConfig  {
 	
 	@Autowired
 	private ProductProcessor productProcessor;
+	
+	@Autowired
+	private ProductCountListener productCountListener;
+	
+	@Autowired
+	private ProductJobExecutionListener productJobExecutionListener;
 	
 	@Bean
     @StepScope
@@ -76,6 +84,7 @@ public class ProductJobConfig  {
 				.reader(reader())
 				.processor(productProcessor)
 				.writer(writer())
+			    .listener(productCountListener)
 				.build();
 	}
 
@@ -84,7 +93,9 @@ public class ProductJobConfig  {
 		return jobBuilderFactory.get("importProductJob")
 				.incrementer(new RunIdIncrementer())
 				.start(step())
+				.listener(productJobExecutionListener)
 				.build();
 	}
+	
 	
 }

@@ -5,12 +5,9 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
+import org.hibernate.ObjectNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.batch.core.Job;
-import org.springframework.batch.core.JobParameters;
-import org.springframework.batch.core.JobParametersBuilder;
-import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -25,10 +22,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.abc.affiliate.dataadapter.controller.exception.ErrorResponse;
-import com.abc.affiliate.dataadapter.domain.common.ProcessIdResult;
-import com.abc.affiliate.dataadapter.domain.common.ProcessIdStatus;
+import com.abc.affiliate.dataadapter.dto.common.ProcessIdResult;
+import com.abc.affiliate.dataadapter.dto.common.ProcessIdStatus;
 import com.abc.affiliate.dataadapter.service.ProductService;
-import com.abc.affiliate.dataadapter.service.impl.ProductServiceImpl;
 
 @RestController
 @RequestMapping("/v1/product")
@@ -42,7 +38,8 @@ public class ProductController {
 
     @PostMapping("/upload")
     public ResponseEntity<ProcessIdResult> upload(HttpServletRequest request) throws Exception {
-        if(!ServletFileUpload.isMultipartContent(request)) {
+    	
+    	if(!ServletFileUpload.isMultipartContent(request)) {
             throw new BadRequestException("Multipart request expected");
         }
 
@@ -56,7 +53,9 @@ public class ProductController {
 	public ResponseEntity<ProcessIdStatus> getStatus(@RequestParam("processId") String processId) {
 
 		ProcessIdStatus status = productService.getStatus(processId); 
-		
+		if (status == null) {
+			throw new ObjectNotFoundException(processId, "Data not found.");
+		}
 		return new ResponseEntity<>(status, HttpStatus.OK);
 	}
 

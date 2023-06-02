@@ -2,23 +2,30 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	
+	<groupId>com.abc.affiliate</groupId>
+	<artifactId>dataadapter</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	
+	<name>dataadapter</name>
+	<description>dataadapter project for Spring Boot</description>
+	
+	<properties>
+		<java.version>11</java.version>
+		<maven-jaxb2-plugin.version>0.15.2</maven-jaxb2-plugin.version>
+        <lombok.version>1.18.26</lombok.version>
+        <jedis.version>4.3.2</jedis.version>
+	</properties>
+	
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.7.13-SNAPSHOT</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.abc.affiliate</groupId>
-	<artifactId>dataadapter</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>dataadapter</name>
-	<description>dataadapter project for Spring Boot</description>
-	<properties>
-		<java.version>11</java.version>
-		<maven-jaxb2-plugin.version>0.15.2</maven-jaxb2-plugin.version>
-        <lombok.version>1.18.26</lombok.version>
-	</properties>
+    
 	<dependencies>
+	
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -32,13 +39,6 @@
 			<artifactId>mysql-connector-j</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-		<!--  
-		<dependency>
-		    <groupId>com.mysql</groupId>
-		    <artifactId>mysql-connector-j</artifactId>
-		    <version>8.0.33</version>
-		</dependency>
-		-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -48,6 +48,25 @@
 		    <groupId>javax.validation</groupId>
 		    <artifactId>validation-api</artifactId>
 		</dependency>
+		
+		<dependency>
+		    <groupId>commons-io</groupId>
+		    <artifactId>commons-io</artifactId>
+		    <version>2.6</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-lang3</artifactId>
+		</dependency>
+		<dependency>
+        	<groupId>org.projectlombok</groupId>
+           	<artifactId>lombok</artifactId>
+        </dependency>
+        <dependency>
+	        <groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-devtools</artifactId>
+	        <optional>true</optional>
+	    </dependency>
 		<dependency>
 		    <groupId>commons-fileupload</groupId>
 		    <artifactId>commons-fileupload</artifactId>
@@ -58,22 +77,6 @@
 		    <artifactId>commons-io</artifactId>
 		    <version>2.6</version>
 		</dependency>
-		<dependency>
-		    <groupId>org.apache.commons</groupId>
-		    <artifactId>commons-lang3</artifactId>
-		    <version>3.0</version>
-		</dependency>
-		<dependency>
-        	<groupId>org.projectlombok</groupId>
-           	<artifactId>lombok</artifactId>
-           	<version>${lombok.version}</version>
-        </dependency>
-        <dependency>
-	        <groupId>org.springframework.boot</groupId>
-	        <artifactId>spring-boot-devtools</artifactId>
-	        <optional>true</optional>
-	    </dependency>
-		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-batch</artifactId>
@@ -87,24 +90,28 @@
 		    <artifactId>xstream</artifactId>
 		    <version>1.4.20</version>
 		</dependency>
-        <!-- 
-		<dependency>
-			<groupId>com.thoughtworks.xstream</groupId>
-			<artifactId>xstream</artifactId>
-			<version>1.4.7</version>
-		</dependency>
-		-->
         <dependency>
 			<groupId>org.springframework.batch</groupId>
 			<artifactId>spring-batch-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
 		<dependency>
 			<groupId>org.springframework.kafka</groupId>
 			<artifactId>spring-kafka</artifactId>
 		</dependency>
+		<dependency>
+		    <groupId>org.springframework.data</groupId>
+		    <artifactId>spring-data-redis</artifactId>
+		    <version>2.3.3.RELEASE</version>
+		 </dependency>
 		
+		<dependency>
+		    <groupId>redis.clients</groupId>
+		    <artifactId>jedis</artifactId>
+		    <version>3.3.0</version>
+		    <type>jar</type>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -115,41 +122,5 @@
 			</plugin>
 		</plugins>
 	</build>
-	<repositories>
-		<repository>
-			<id>spring-milestones</id>
-			<name>Spring Milestones</name>
-			<url>https://repo.spring.io/milestone</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-		<repository>
-			<id>spring-snapshots</id>
-			<name>Spring Snapshots</name>
-			<url>https://repo.spring.io/snapshot</url>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-		</repository>
-	</repositories>
-	<pluginRepositories>
-		<pluginRepository>
-			<id>spring-milestones</id>
-			<name>Spring Milestones</name>
-			<url>https://repo.spring.io/milestone</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</pluginRepository>
-		<pluginRepository>
-			<id>spring-snapshots</id>
-			<name>Spring Snapshots</name>
-			<url>https://repo.spring.io/snapshot</url>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-		</pluginRepository>
-	</pluginRepositories>
 
 </project>

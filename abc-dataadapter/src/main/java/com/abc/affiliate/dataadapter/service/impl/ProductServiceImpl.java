@@ -2,9 +2,7 @@ package com.abc.affiliate.dataadapter.service.impl;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.Date;
-import java.util.UUID;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.tomcat.util.http.fileupload.FileItemIterator;
@@ -18,9 +16,11 @@ import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-import com.abc.affiliate.dataadapter.domain.common.ProcessIdStatus;
+import com.abc.affiliate.dataadapter.dto.common.ProcessIdStatus;
+import com.abc.affiliate.dataadapter.dto.common.ProcessStatus;
 import com.abc.affiliate.dataadapter.service.ProductService;
 
 @Service
@@ -34,6 +34,12 @@ public class ProductServiceImpl implements ProductService {
 
 	@Autowired
 	private Job job;
+	
+	@Autowired
+    private RedisTemplate<String, ProcessIdStatus> redisTemplateProcessIdStatus;
+    
+    public static final String HASH_KEY_NAME = "PRODUCT-UPLOAD";
+
     
 	@Override
 	public void upload(String processId, FileItemIterator itemIterator) throws Exception {
@@ -59,7 +65,14 @@ public class ProductServiceImpl implements ProductService {
         outs.close();
         
         LOG.info("Process {} with type {}", fileName, type);
-
+        
+        /* Store in redis */
+        redisTemplateProcessIdStatus.opsForHash().put(HASH_KEY_NAME, processId, ProcessIdStatus.builder()
+        		.processId(processId).completedRecords(0)
+        		.status(ProcessStatus.New)
+        		.totalRecords(0)
+        		.build());
+        
         JobParameters jobParameters = new JobParametersBuilder()
         		.addString("fileName", destination.getAbsolutePath())
 				.addString("processId", processId)
@@ -69,14 +82,16 @@ public class ProductServiceImpl implements ProductService {
 		JobExecution execution = jobLauncher.run(job, jobParameters);
 		System.out.println("STATUS :: "+execution.getStatus());
         
+		
     }
 	
 	@Override
 	public ProcessIdStatus getStatus(String processId) {
-		// TODO Auto-generated method stub
-		return null;
+		ProcessIdStatus processIdStatus = (ProcessIdStatus) redisTemplateProcessIdStatus.opsForHash().get(HASH_KEY_NAME, processId);
+		if (processIdStatus != null && (processIdStatus.getStatus().equals(ProcessStatus.Completed) || processIdStatus.getStatus().equals(ProcessStatus.Canceled))) {
+			//redisTemplateProcessIdStatus.opsForHash().delete(HASH_KEY_NAME, processId);
+		}
+		return processIdStatus;
 	}
-	
-	
 	
 }

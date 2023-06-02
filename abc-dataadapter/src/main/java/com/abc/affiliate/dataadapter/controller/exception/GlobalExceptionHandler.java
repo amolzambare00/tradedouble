@@ -1,13 +1,10 @@
 package com.abc.affiliate.dataadapter.controller.exception;
 
-import java.util.Objects;
-
 import javax.persistence.EntityNotFoundException;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
-import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.springframework.beans.factory.annotation.Value;
+import org.hibernate.ObjectNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -60,6 +57,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<Object> handleMethodNotFound(MethodNotAllowed notFound, WebRequest request) {
         return buildErrorResponse(notFound, HttpStatus.NOT_FOUND, request);
+    }
+    
+    @ExceptionHandler(ObjectNotFoundException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ResponseEntity<Object> handleMethodNotFound(ObjectNotFoundException notFound, WebRequest request) {
+        return buildErrorResponse(notFound, HttpStatus.INTERNAL_SERVER_ERROR, request);
     }
     
     @ExceptionHandler(Exception.class)

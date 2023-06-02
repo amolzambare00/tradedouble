@@ -6,7 +6,7 @@
 //
 
 
-package com.abc.affiliate.dataadapter.domain.product;
+package com.abc.affiliate.dataadapter.dto.product;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;

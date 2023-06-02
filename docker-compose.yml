@@ -1,6 +1,7 @@
 version: '3.8'
 
 services:
+  ## Mysql Database setup ##
   db:
     container_name: mysql8
     image: mysql:8
@@ -17,6 +18,7 @@ services:
     volumes:
       - my-db:/var/lib/mysql
   
+  ## Zookeper setup for kafka ##
   zookeeper:
     container_name: zookeeper
     image: confluentinc/cp-zookeeper:latest
@@ -26,6 +28,7 @@ services:
     ports:
       - 22181:2181
   
+  ## Kafka Setup ##
   kafka:
     container_name: kafka
     image: confluentinc/cp-kafka:latest
@@ -40,8 +43,22 @@ services:
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      
+  ## Redis setup ##
+  cache:
+    image: redis:6.2-alpine
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning
+    volumes: 
+      - cache:/data
+              
   
 # Names our volume
 volumes:
+  cache:
+    driver: local
   my-db:
+    driver: local
     

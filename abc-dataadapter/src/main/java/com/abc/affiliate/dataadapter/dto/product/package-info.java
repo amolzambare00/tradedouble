@@ -6,4 +6,4 @@
 //
 
 @javax.xml.bind.annotation.XmlSchema(namespace = "urn:com:tradedoubler:pf:model:xml:common", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
-package com.abc.affiliate.dataadapter.domain.product;
+package com.abc.affiliate.dataadapter.dto.product;

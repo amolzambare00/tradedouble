@@ -7,7 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 
-import com.abc.affiliate.dataadapter.domain.product.Result.Products.Product;
+import com.abc.affiliate.dataadapter.dto.product.Result.Products.Product;
+
 
 public class ProductKafkaSender implements ItemWriter<Product> {
 
@@ -23,5 +24,6 @@ public class ProductKafkaSender implements ItemWriter<Product> {
             kafkaTemplate.send(topic, product.getEan(), product);
         }
         System.out.println("Message sent to kafka ");
+        
     }
 }

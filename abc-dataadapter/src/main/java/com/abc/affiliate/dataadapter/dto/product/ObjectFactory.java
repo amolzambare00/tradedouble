@@ -6,7 +6,7 @@
 //
 
 
-package com.abc.affiliate.dataadapter.domain.product;
+package com.abc.affiliate.dataadapter.dto.product;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlElementDecl;

@@ -1,4 +1,4 @@
-package com.abc.affiliate.dataadapter.domain.common;
+package com.abc.affiliate.dataadapter.dto.common;
 
 import lombok.Builder;
 import lombok.Data;
