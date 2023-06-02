@@ -8,6 +8,7 @@
 
 package com.abc.affiliate.dataadapter.dto.product;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -51,7 +52,7 @@ import javax.xml.bind.annotation.XmlValue;
     "field"
 })
 @XmlRootElement(name = "fields")
-public class Fields {
+public class Fields implements Serializable {
 
     @XmlElement(required = true)
     protected List<Fields.Field> field;
@@ -107,7 +108,7 @@ public class Fields {
     @XmlType(name = "", propOrder = {
         "value"
     })
-    public static class Field {
+    public static class Field implements Serializable {
 
         @XmlValue
         protected String value;

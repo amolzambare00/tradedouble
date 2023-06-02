@@ -6,7 +6,7 @@
 //
 
 
-package com.abc.affiliate.dataadapter.dto.product;
+package com.abc.affiliate.productprocessor.dto.product;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -16,8 +16,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.XmlValue;
 
 
 /**
@@ -30,15 +30,13 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="category" maxOccurs="unbounded">
+ *         &lt;element name="field" maxOccurs="unbounded">
  *           &lt;complexType>
- *             &lt;complexContent>
- *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *             &lt;simpleContent>
+ *               &lt;extension base="&lt;http://www.w3.org/2001/XMLSchema>string">
  *                 &lt;attribute name="name" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
- *                 &lt;attribute name="id" use="required" type="{http://www.w3.org/2001/XMLSchema}unsignedShort" />
- *                 &lt;attribute name="tdCategoryName" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
- *               &lt;/restriction>
- *             &lt;/complexContent>
+ *               &lt;/extension>
+ *             &lt;/simpleContent>
  *           &lt;/complexType>
  *         &lt;/element>
  *       &lt;/sequence>
@@ -51,41 +49,41 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "category"
+    "field"
 })
-@XmlRootElement(name = "categories")
-public class Categories implements Serializable {
+@XmlRootElement(name = "fields")
+public class Fields implements Serializable {
 
     @XmlElement(required = true)
-    protected List<Categories.Category> category;
+    protected List<Fields.Field> field;
 
     /**
-     * Gets the value of the category property.
+     * Gets the value of the field property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the category property.
+     * This is why there is not a <CODE>set</CODE> method for the field property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getCategory().add(newItem);
+     *    getField().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Categories.Category }
+     * {@link Fields.Field }
      * 
      * 
      */
-    public List<Categories.Category> getCategory() {
-        if (category == null) {
-            category = new ArrayList<Categories.Category>();
+    public List<Fields.Field> getField() {
+        if (field == null) {
+            field = new ArrayList<Fields.Field>();
         }
-        return this.category;
+        return this.field;
     }
 
 
@@ -96,29 +94,50 @@ public class Categories implements Serializable {
      * 
      * <pre>
      * &lt;complexType>
-     *   &lt;complexContent>
-     *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+     *   &lt;simpleContent>
+     *     &lt;extension base="&lt;http://www.w3.org/2001/XMLSchema>string">
      *       &lt;attribute name="name" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
-     *       &lt;attribute name="id" use="required" type="{http://www.w3.org/2001/XMLSchema}unsignedShort" />
-     *       &lt;attribute name="tdCategoryName" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
-     *     &lt;/restriction>
-     *   &lt;/complexContent>
+     *     &lt;/extension>
+     *   &lt;/simpleContent>
      * &lt;/complexType>
      * </pre>
      * 
      * 
      */
     @XmlAccessorType(XmlAccessType.FIELD)
-    @XmlType(name = "")
-    public static class Category implements Serializable {
+    @XmlType(name = "", propOrder = {
+        "value"
+    })
+    public static class Field implements Serializable {
 
+        @XmlValue
+        protected String value;
         @XmlAttribute(name = "name", required = true)
         protected String name;
-        @XmlAttribute(name = "id", required = true)
-        @XmlSchemaType(name = "unsignedShort")
-        protected int id;
-        @XmlAttribute(name = "tdCategoryName", required = true)
-        protected String tdCategoryName;
+
+        /**
+         * Gets the value of the value property.
+         * 
+         * @return
+         *     possible object is
+         *     {@link String }
+         *     
+         */
+        public String getValue() {
+            return value;
+        }
+
+        /**
+         * Sets the value of the value property.
+         * 
+         * @param value
+         *     allowed object is
+         *     {@link String }
+         *     
+         */
+        public void setValue(String value) {
+            this.value = value;
+        }
 
         /**
          * Gets the value of the name property.
@@ -142,46 +161,6 @@ public class Categories implements Serializable {
          */
         public void setName(String value) {
             this.name = value;
-        }
-
-        /**
-         * Gets the value of the id property.
-         * 
-         */
-        public int getId() {
-            return id;
-        }
-
-        /**
-         * Sets the value of the id property.
-         * 
-         */
-        public void setId(int value) {
-            this.id = value;
-        }
-
-        /**
-         * Gets the value of the tdCategoryName property.
-         * 
-         * @return
-         *     possible object is
-         *     {@link String }
-         *     
-         */
-        public String getTdCategoryName() {
-            return tdCategoryName;
-        }
-
-        /**
-         * Sets the value of the tdCategoryName property.
-         * 
-         * @param value
-         *     allowed object is
-         *     {@link String }
-         *     
-         */
-        public void setTdCategoryName(String value) {
-            this.tdCategoryName = value;
         }
 
     }

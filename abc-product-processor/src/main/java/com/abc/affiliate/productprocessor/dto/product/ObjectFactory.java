@@ -6,7 +6,7 @@
 //
 
 
-package com.abc.affiliate.dataadapter.dto.product;
+package com.abc.affiliate.productprocessor.dto.product;
 
 import java.io.Serializable;
 
