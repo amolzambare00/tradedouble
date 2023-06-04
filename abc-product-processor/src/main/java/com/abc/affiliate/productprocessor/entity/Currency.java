@@ -4,10 +4,15 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import com.abc.affiliate.productprocessor.audit.Auditable;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,12 +27,13 @@ import lombok.ToString;
  */
 @Entity
 @Table(name="currency")
+@EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
 @Setter
 @Getter
-public class Currency implements Serializable {
+public class Currency extends Auditable<String> implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id

@@ -6,6 +6,7 @@ import java.math.BigInteger;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,6 +14,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import com.abc.affiliate.productprocessor.audit.Auditable;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,12 +32,14 @@ import lombok.ToString;
  */
 @Entity
 @Table(name="product_offer_price")
+@EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
 @Setter
 @Getter
-public class ProductOfferPrice implements Serializable {
+public class ProductOfferPrice extends Auditable<String> implements Serializable {
+	
 	private static final long serialVersionUID = 1L;
 
 	@Id
