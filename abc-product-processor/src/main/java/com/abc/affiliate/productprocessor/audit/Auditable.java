@@ -30,21 +30,21 @@ import lombok.ToString;
 public abstract class Auditable<U> {
 
     @CreatedBy
-    @Column(nullable = false, updatable = false)
+    @Column(name = "created_by", nullable = false, updatable = false)
     protected U createdBy;
 
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(nullable = false, updatable = false)
+    @Column(name = "created_date", nullable = false, updatable = false)
     protected Date createdDate;
 
     @LastModifiedBy
-    @Column(nullable = false)
+    @Column(name = "last_modified_by", nullable = false)
     protected U lastModifiedBy;
 
     @LastModifiedDate
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(nullable = false)
+    @Column(name = "last_modified_date", nullable = false)
     protected Date lastModifiedDate;
 
 }

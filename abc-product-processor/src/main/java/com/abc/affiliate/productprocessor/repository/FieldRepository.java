@@ -6,4 +6,6 @@ import com.abc.affiliate.productprocessor.entity.Field;
 
 public interface FieldRepository extends JpaRepository<Field, Long> {
 
+	Field findOneByName(String name);
+
 }

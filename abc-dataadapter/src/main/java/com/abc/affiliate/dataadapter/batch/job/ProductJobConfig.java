@@ -24,6 +24,7 @@ import com.abc.affiliate.dataadapter.batch.listener.ProductCountListener;
 import com.abc.affiliate.dataadapter.batch.listener.ProductJobExecutionListener;
 import com.abc.affiliate.dataadapter.batch.processor.ProductProcessor;
 import com.abc.affiliate.dataadapter.batch.writer.ProductKafkaSender;
+import com.abc.affiliate.dataadapter.dto.product.Categories;
 import com.abc.affiliate.dataadapter.dto.product.Result.Products.Product;
 import com.abc.affiliate.dataadapter.service.impl.ProductServiceImpl;
 import com.thoughtworks.xstream.security.ExplicitTypePermission;
@@ -63,7 +64,10 @@ public class ProductJobConfig  {
 		
 		Map<String,Class> aliasesMap =new HashMap<>();
 		aliasesMap.put("product", Product.class);
-		ExplicitTypePermission typePermission = new ExplicitTypePermission(new Class[] { Product.class });
+		aliasesMap.put("categories", Categories.class);
+		aliasesMap.put("categorie", Categories.Category.class);
+		
+		ExplicitTypePermission typePermission = new ExplicitTypePermission(new Class[] { Product.class, Categories.class, Categories.Category.class });
 		XStreamMarshaller marshaller = new XStreamMarshaller();
 		marshaller.setAliases(aliasesMap);
 		marshaller.setTypePermissions(typePermission);

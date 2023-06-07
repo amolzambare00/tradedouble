@@ -20,6 +20,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import com.abc.affiliate.productprocessor.audit.Auditable;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -33,6 +34,7 @@ import lombok.ToString;
 @Entity
 @Table(name="product_offer_price")
 @EntityListeners(AuditingEntityListener.class)
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString

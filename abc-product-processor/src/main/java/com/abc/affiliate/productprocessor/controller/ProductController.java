@@ -1,5 +1,8 @@
 package com.abc.affiliate.productprocessor.controller;
 
+import java.util.List;
+
+import org.hibernate.ObjectNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,14 +12,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.abc.affiliate.productprocessor.controller.exception.ErrorResponse;
-import com.abc.affiliate.productprocessor.dto.common.ProcessIdStatus;
-import com.abc.affiliate.productprocessor.service.ProductService;
+import com.abc.affiliate.productprocessor.dto.image.ProductImageBean;
+import com.abc.affiliate.productprocessor.entity.ProductImage;
+import com.abc.affiliate.productprocessor.service.ProductImageService;
 
 @RestController
 @RequestMapping("/v1/product")
@@ -25,20 +29,16 @@ public class ProductController {
 	private static final Logger LOG = LoggerFactory.getLogger(ProductController.class);
 	
 	@Autowired
-	@Qualifier("productServiceImpl")
-    private ProductService productService;
+	@Qualifier("productImageServiceImpl")
+    private ProductImageService productImageService;
 
-	@GetMapping("/status")
-	public ResponseEntity<ProcessIdStatus> getStatus(@RequestParam("processId") String processId) {
-		/*
-		ProcessIdStatus status = productService.getStatus(processId); 
-		if (status == null) {
-			throw new ObjectNotFoundException(processId, "Data not found.");
+	@GetMapping("/images/getbyproductid/{productId}")
+	public ResponseEntity<List<ProductImageBean>> getProductImages(@PathVariable("productId") Long productId) {
+		List<ProductImageBean> images = productImageService.getImagesByProductId(productId);
+		if (images == null || images.size() == 0) {
+			throw new ObjectNotFoundException(productId, "Images not available.");
 		}
-		return new ResponseEntity<>(status, HttpStatus.OK);
-		*/
-		
-		return new ResponseEntity<>(null, HttpStatus.OK);
+		return new ResponseEntity<>(images, HttpStatus.OK);
 	}
 
     /* Controller level exception  */

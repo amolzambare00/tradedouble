@@ -6,4 +6,6 @@ import com.abc.affiliate.productprocessor.entity.Currency;
 
 public interface CurrencyRepository extends JpaRepository<Currency, Long> {
 
+	Currency findOneByCurrency(String currency);
+
 }
